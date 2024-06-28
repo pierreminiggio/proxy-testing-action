@@ -22,7 +22,7 @@ def get_ip_info(proxy_url, proxy_auth=None):
             auth = requests.auth.HTTPProxyAuth(*proxy_auth.split(':', 1))
 
         # Make a request to the API using the proxy
-        response = requests.get("http://api.myip.com", proxies=proxies, auth=auth)
+        response = requests.get("https://api.myip.com", proxies=proxies, auth=auth)
         
         # Check if the request was successful
         if response.status_code == 200:
