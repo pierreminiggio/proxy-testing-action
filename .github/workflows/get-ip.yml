@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@main
       - uses: actions/setup-python@v2
       - run: sudo apt update
+      - run: pip install requests
       - run: python main.py $proxy $username_password > ip.json
         env:
           proxy: ${{ secrets.PROXY }}
