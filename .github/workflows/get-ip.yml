@@ -1,0 +1,20 @@
+name: Get IP
+jobs:
+  get:
+    name: Get IP
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9']
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-python@v2
+      - run: sudo apt update
+      - run: python main.py $proxy $username_password > ip.json
+        env:
+          proxy: ${{ secrets.PROXY }}
+          username_password: ${{ secrets.USERNAME_PASSWORD }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ip.json
+          path: ip.json
