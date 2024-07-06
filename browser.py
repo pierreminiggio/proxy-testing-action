@@ -13,6 +13,7 @@ def get_ip_info(proxy_url):
     browser_option.add_argument("--log-level=3")
     browser_option.add_argument("--disable-notifications")
     browser_option.add_argument("--disable-popup-blocking")
+    browser_option.add_argument("--headless")
 
     # Add proxy settings for both HTTP and HTTPS if 'proxy' is specified
     if proxy_url is not None:
