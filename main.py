@@ -9,12 +9,12 @@ def get_ip_info(proxy_url, proxy_auth=None):
             proxies = {
                 "http": proxy_url
             }
-        elif proxy_url.startswith("https://"):
+        #elif proxy_url.startswith("https://"):
             proxies = {
                 "https": proxy_url
             }
-        else:
-            raise ValueError("Invalid proxy URL. Must start with http:// or https://")
+        #else:
+        #    raise ValueError("Invalid proxy URL. Must start with http:// or https://")
 
         # Set up proxy authentication if provided
         auth = None
