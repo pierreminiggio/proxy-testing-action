@@ -17,7 +17,8 @@ def get_ip_info(proxy_url):
 
     # Add proxy settings for both HTTP and HTTPS if 'proxy' is specified
     if proxy_url is not None:
-        browser_option.add_argument("--proxy-server=%s" % proxy_url)
+        browser_option.add_argument(f"--proxy-pac-url=PROXY {proxy_url}")
+        # browser_option.add_argument("--proxy-server=%s" % proxy_url)
 
     # Launch Firefox browser with the configured options
     driver = webdriver.Firefox(options=browser_option)
