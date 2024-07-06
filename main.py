@@ -36,8 +36,8 @@ def get_ip_info(proxy_url, proxy_auth=None):
 
 if __name__ == "__main__":
     if len(sys.argv) not in [2, 3]:
-        print("Usage: python script.py <proxy_url> [proxy_auth]")
-        print("Example: python script.py http://your-proxy-url:port username:password")
+        print("Usage: python main.py <proxy_url> [proxy_auth]")
+        print("Example: python main.py http://your-proxy-url:port username:password")
         sys.exit(1)
     
     proxy_url = sys.argv[1]

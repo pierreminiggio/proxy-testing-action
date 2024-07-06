@@ -1,0 +1,22 @@
+on:
+  workflow_dispatch:
+name: Get Browser IP
+jobs:
+  get:
+    name: Get Browser IP
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9']
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-python@v2
+      - run: sudo apt update
+      - run: pip install selenium
+      - run: python browser.py $proxy > ip.json
+        env:
+          proxy: ${{ secrets.PROXY }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ip.json
+          path: ip.json
