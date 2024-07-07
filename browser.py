@@ -50,7 +50,7 @@ def get_ip_info(proxy_url):
     #driver.profile = profile
 
     try:
-        driver.get('http://api.myip.com')
+        driver.get('https://api.myip.com')
         body_text = driver.find_element(By.TAG_NAME, 'body').text
         print(body_text)
 
