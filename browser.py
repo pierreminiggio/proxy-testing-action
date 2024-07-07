@@ -2,9 +2,24 @@ import sys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 
+def parse_proxy_url(proxy_url):
+    if proxy_url.startswith("http://"):
+        # Remove the "http://" prefix
+        remaining_url = proxy_url[len("http://"):]
+        
+        # Split the remaining part by ':' to separate the domain and port
+        if ':' in remaining_url:
+            proxy_domain, proxy_port = remaining_url.split(':', 1)
+        else:
+            raise ValueError("Invalid proxy URL format. Expected format: http://domain:port")
+        
+        return proxy_domain, proxy_port
+    else:
+        raise ValueError("Proxy URL must start with 'http://'")
+    
 def get_ip_info(proxy_url):
-    # Firefox options setup
     browser_option = FirefoxOptions()
     browser_option.add_argument("--no-sandbox")
     browser_option.add_argument("--disable-dev-shm-usage")
@@ -15,13 +30,22 @@ def get_ip_info(proxy_url):
     browser_option.add_argument("--disable-popup-blocking")
     browser_option.add_argument("--headless")
 
-    # Add proxy settings for both HTTP and HTTPS if 'proxy' is specified
-    if proxy_url is not None:
-        browser_option.add_argument(f"--proxy-pac-url=PROXY {proxy_url}")
-        # browser_option.add_argument("--proxy-server=%s" % proxy_url)
+    profile = FirefoxProfile();
 
-    # Launch Firefox browser with the configured options
+    if proxy_url is not None:
+        proxy_domain, proxy_port = parse_proxy_url(proxy_url)
+        profile.set_preference("network.proxy.type", 1)
+        profile.set_preference("network.proxy.http", proxy_domain)
+        profile.set_preference("network.proxy.http_port", proxy_port)
+        #browser_option._caps['proxy'] = {
+        #    "proxyType": "MANUAL",
+        #    "httpProxy": proxy_url,
+            #"ftpProxy": proxy_url,
+        #    "sslProxy": proxy_url
+        #}
+
     driver = webdriver.Firefox(options=browser_option)
+    driver.profile = profile
 
     try:
         driver.get('https://api.myip.com')
