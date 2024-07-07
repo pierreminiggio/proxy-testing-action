@@ -30,13 +30,15 @@ def get_ip_info(proxy_url):
     browser_option.add_argument("--disable-popup-blocking")
     browser_option.add_argument("--headless")
 
-    profile = FirefoxProfile();
+    #profile = FirefoxProfile();
 
     if proxy_url is not None:
-        proxy_domain, proxy_port = parse_proxy_url(proxy_url)
-        profile.set_preference("network.proxy.type", 1)
-        profile.set_preference("network.proxy.http", proxy_domain)
-        profile.set_preference("network.proxy.http_port", proxy_port)
+        browser_option.add_argument("--proxy-server=%s" % proxy_url)
+        #proxy_domain, proxy_port = parse_proxy_url(proxy_url)
+        #profile.set_preference("network.proxy.type", 1)
+        #profile.set_preference("network.proxy.http", proxy_domain)
+        #profile.set_preference("network.proxy.http_port", proxy_port)
+
         #browser_option._caps['proxy'] = {
         #    "proxyType": "MANUAL",
         #    "httpProxy": proxy_url,
@@ -45,7 +47,7 @@ def get_ip_info(proxy_url):
         #}
 
     driver = webdriver.Firefox(options=browser_option)
-    driver.profile = profile
+    #driver.profile = profile
 
     try:
         driver.get('http://api.myip.com')
